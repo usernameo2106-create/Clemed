@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clemed — Robinetterie, Éviers & Plomberie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:      #10181A;
+    --paper:    #F4F6F5;
+    --accent:   #0F6E63;
+    --brass:    #B08A45;
+    --line:     #DADFDD;
+    --paper-2:  #E9EDEB;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+  .eyebrow{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; line-height:1.05; letter-spacing:-0.01em; }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(244,246,245,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; }
+  .brand img{ height:30px; width:auto; }
+  .nav-links{ display:flex; gap:32px; font-size:14px; font-weight:500; }
+  .nav-links a{ opacity:0.72; transition:opacity .2s; }
+  .nav-links a:hover{ opacity:1; }
+  .nav-cta{ font-size:13px; font-weight:600; padding:9px 18px; background:var(--ink); color:var(--paper); border-radius:2px; }
+  .menu-btn{ display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink); }
+
+  .hero{ padding:80px 0 60px; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center; }
+  .hero h1{ font-size:clamp(34px,4.6vw,54px); }
+  .hero p.lede{ margin-top:20px; font-size:16.5px; max-width:46ch; opacity:0.8; }
+  .hero p.lede + p.lede{ margin-top:10px; }
+  .hero-ctas{ margin-top:30px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  .btn-primary{ background:var(--accent); color:#fff; font-weight:600; font-size:14px; padding:14px 26px; border-radius:2px; display:inline-block; transition:transform .15s ease; }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{ font-size:14px; font-weight:600; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+  .hero-photo{ border-radius:6px; overflow:hidden; border:1px solid var(--line); }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; }
+
+  .store-strip{ display:flex; gap:28px; margin-top:34px; flex-wrap:wrap; font-size:13.5px; font-weight:500; }
+  .store-strip span{ display:flex; align-items:center; gap:6px; opacity:0.8; }
+  .store-strip svg{ color:var(--accent); flex-shrink:0; }
+
+  section{ padding:70px 0; border-top:1px solid var(--line); }
+  .section-head{ max-width:58ch; margin-bottom:42px; }
+  .section-head h2{ font-size:clamp(26px,3.1vw,36px); margin-top:10px; }
+
+  .cats{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .cat{ background:var(--paper); overflow:hidden; }
+  .cat .imgbox{ aspect-ratio:4/3; overflow:hidden; background:#fff; }
+  .cat img{ width:100%; height:100%; object-fit:cover; }
+  .cat-body{ padding:20px 22px 26px; }
+  .cat h3{ font-size:17.5px; margin-bottom:7px; }
+  .cat p{ font-size:13.5px; opacity:0.7; }
+
+  .finishes{ display:flex; gap:14px; flex-wrap:wrap; }
+  .finish{ display:flex; align-items:center; gap:10px; border:1px solid var(--line); padding:10px 18px 10px 10px; border-radius:999px; background:var(--paper-2); }
+  .swatch{ width:28px; height:28px; border-radius:50%; border:1px solid rgba(0,0,0,0.1); flex-shrink:0; }
+  .finish span{ font-size:13.5px; font-weight:500; }
+
+  .badge-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+  .badge{ font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; border:1px solid var(--line); background:#fff; padding:8px 14px; border-radius:2px; }
+
+  .gallery{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .gallery div{ aspect-ratio:1; background:#fff; border-radius:3px; overflow:hidden; border:1px solid var(--line); }
+  .gallery img{ width:100%; height:100%; object-fit:cover; }
+
+  .about-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:60px; align-items:start; }
+  .stat-row{ display:flex; gap:40px; margin-top:32px; flex-wrap:wrap; }
+  .stat b{ font-family:var(--font-display); font-size:28px; display:block; }
+  .stat span{ font-size:13px; opacity:0.65; }
+
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:12px; font-weight:600; margin-bottom:6px; letter-spacing:.03em; }
+  .field input, .field textarea, .field select{ width:100%; border:1px solid var(--line); background:var(--paper-2); padding:12px 14px; font-family:var(--font-body); font-size:14px; border-radius:2px; color:var(--ink); }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .info-list div{ display:flex; gap:14px; padding:16px 0; border-top:1px solid var(--line); font-size:14.5px; }
+  .info-list div span:first-child{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; opacity:0.55; width:90px; flex-shrink:0; }
+  .info-list a{ text-decoration:underline; text-underline-offset:2px; }
+
+  footer.site-footer{ border-top:1px solid var(--line); padding:30px 0; }
+  .foot-row{ display:flex; justify-content:space-between; align-items:center; font-size:13px; opacity:0.6; flex-wrap:wrap; gap:12px; }
+  .foot-row img{ height:18px; opacity:0.7; }
+
+  @media (max-width:840px){
+    .nav-links, .nav-cta{ display:none; }
+    .menu-btn{ display:block; }
+    .hero-grid, .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    .hero-photo{ order:-1; }
+    .cats{ grid-template-columns:1fr; }
+    .gallery{ grid-template-columns:repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <a class="brand" href="#"><img src="assets/logo.png" alt="Clemed"></a>
+    <nav class="nav-links">
+      <a href="#produits">Produits</a>
+      <a href="#finitions">Finitions</a>
+      <a href="#magasins">Magasins</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Nous contacter</a>
+    <button class="menu-btn">☰</button>
+  </div>
+</header>
+
+<section class="hero" style="border-top:none;">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Robinetterie · Éviers · Sanitaires · Plomberie</p>
+      <h1>Votre référence en robinetterie et plomberie.</h1>
+      <p class="lede">Robinetterie de porte, éviers, sanitaires et tous vos besoins en plomberie.</p>
+      <p class="lede">Nous allions qualité, design et performance dans tous nos produits.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#produits">Voir nos produits</a>
+        <a class="btn-ghost" href="https://www.instagram.com/clemedgriferia" target="_blank" rel="noopener">Suivez-nous — @clemedgriferia →</a>
+      </div>
+      <div class="store-strip">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Casablanca</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Tanger</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Tétouan</span>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/evier-gold.png" alt="Évier encastrable Clemed, finition dorée">
+    </div>
+  </div>
+</section>
+
+<section id="produits">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Nos gammes</p>
+      <h2>Tout ce qu'il faut, du robinet à l'évier</h2>
+    </div>
+    <div class="cats">
+      <div class="cat">
+        <div class="imgbox"><img src="assets/kit-douchette-chrome-1.png" alt="Kit douchette WC chromé Clemed"></div>
+        <div class="cat-body">
+          <h3>Robinetterie & douchettes</h3>
+          <p>Douchettes WC complètes avec flexible et mitigeur mural, en chrome ou noir mat.</p>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="imgbox"><img src="assets/evier-inox.png" alt="Évier encastrable inox Clemed"></div>
+        <div class="cat-body">
+          <h3>Éviers encastrables</h3>
+          <p>Acier inoxydable 304, qualité premium, 3 dimensions au choix, garantie 20 ans.</p>
+        </div>
+      </div>
+      <div class="cat">
+        <div class="imgbox"><img src="assets/robinet-arret-1.png" alt="Robinet d'arrêt Clemed"></div>
+        <div class="cat-body">
+          <h3>Plomberie & raccords</h3>
+          <p>Robinets d'arrêt, clapets anti-retour et flexibles pour toute installation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="finitions">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Finitions disponibles</p>
+      <h2>Chaque modèle, en plusieurs finitions</h2>
+    </div>
+    <div class="finishes">
+      <div class="finish"><span class="swatch" style="background:linear-gradient(135deg,#d9dee0,#8b969a);"></span><span>Chrome</span></div>
+      <div class="finish"><span class="swatch" style="background:#1b1f20;"></span><span>Noir mat</span></div>
+      <div class="finish"><span class="swatch" style="background:linear-gradient(135deg,#c9a24f,#8a6a2c);"></span><span>Doré</span></div>
+      <div class="finish"><span class="swatch" style="background:linear-gradient(135deg,#e7e7e5,#b7b6b2);"></span><span>Inox</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge">Garantie 20 ans — éviers</span>
+      <span class="badge">Acier inoxydable 304</span>
+      <span class="badge">Fabriqué en Espagne</span>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">En images</p>
+      <h2>Un aperçu de nos produits</h2>
+    </div>
+    <div class="gallery">
+      <div><img src="assets/kit-douchette-noir.png" alt="Kit douchette WC noir mat Clemed"></div>
+      <div><img src="assets/evier-noir.png" alt="Évier encastrable noir Clemed"></div>
+      <div><img src="assets/clapet-anti-retour.png" alt="Clapet anti-retour Clemed"></div>
+      <div><img src="assets/flexible.png" alt="Flexible de plomberie Clemed"></div>
+      <div><img src="assets/robinet-arret-2.png" alt="Robinet d'arrêt Clemed"></div>
+      <div><img src="assets/robinet-arret-3.png" alt="Robinet d'arrêt Clemed"></div>
+      <div><img src="assets/evier-gold.png" alt="Évier encastrable doré Clemed"></div>
+      <div><img src="assets/kit-douchette-chrome-2.png" alt="Kit douchette chromé Clemed"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="eyebrow">La marque</p>
+      <h2>Qualité, design, performance</h2>
+    </div>
+    <div>
+      <p style="font-size:16px; opacity:0.85; max-width:60ch;">
+        Clemed est votre référence pour la robinetterie de porte, les éviers, les sanitaires et tous vos besoins en plomberie. Nous allions qualité, design et performance dans tous nos produits, avec des magasins à Casablanca, Tanger et Tétouan.
+      </p>
+      <div class="stat-row">
+        <div class="stat"><b>3</b><span>magasins au Maroc</span></div>
+        <div class="stat"><b>20 ans</b><span>de garantie sur nos éviers</span></div>
+        <div class="stat"><b>304</b><span>acier inoxydable premium</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="magasins">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Où nous trouver</p>
+      <h2>Nos magasins</h2>
+    </div>
+    <div class="cats" style="grid-template-columns:repeat(3,1fr);">
+      <div class="cat"><div class="cat-body"><h3>Casablanca</h3><p>Notre siège et showroom principal.</p></div></div>
+      <div class="cat"><div class="cat-body"><h3>Tanger</h3><p>Retrouvez notre gamme complète.</p></div></div>
+      <div class="cat"><div class="cat-body"><h3>Tétouan</h3><p>Retrouvez notre gamme complète.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow">Nous contacter</p>
+      <h2>Rejoignez-nous</h2>
+      <div class="info-list" style="margin-top:28px;">
+        <div><span>Adresse</span><span>Clemed, HCJ9+PXX, Casablanca 20320 — <a href="https://www.google.com/maps/search/?api=1&query=HCJ9%2BPXX+Casablanca" target="_blank" rel="noopener">voir sur la carte</a></span></div>
+        <div><span>Email</span><span><a href="mailto:contact@clemed.ma">contact@clemed.ma</a></span></div>
+        <div><span>Instagram</span><span><a href="https://www.instagram.com/clemedgriferia" target="_blank" rel="noopener">@clemedgriferia</a></span></div>
+        <div><span>Magasins</span><span>Casablanca · Tanger · Tétouan</span></div>
+      </div>
+    </div>
+    <form onsubmit="event.preventDefault(); alert('Formulaire de démonstration — brancher à Formspree ou EmailJS pour recevoir les messages, ou envoyer directement à contact@clemed.ma.');">
+      <div class="field"><label>Nom</label><input type="text" required></div>
+      <div class="field"><label>Téléphone ou email</label><input type="text" required></div>
+      <div class="field"><label>Vous êtes</label>
+        <select>
+          <option>Particulier</option>
+          <option>Revendeur / professionnel</option>
+        </select>
+      </div>
+      <div class="field"><label>Message</label><textarea required placeholder="Produit recherché, quantité, ville..."></textarea></div>
+      <button class="btn-primary" style="border:none; cursor:pointer; width:100%;">Envoyer la demande</button>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap foot-row">
+    <img src="assets/logo.png" alt="Clemed">
+    <span>© 2026 Clemed. Tous droits réservés.</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelector('.menu-btn').addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.cssText += 'position:absolute; top:100%; left:0; right:0; flex-direction:column; background:var(--paper); padding:20px 24px; border-top:1px solid var(--line);';
+  });
+</script>
+
+</body>
+</html>
